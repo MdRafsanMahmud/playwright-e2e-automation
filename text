@@ -1,0 +1,110 @@
+1. Basic Test Execution
+Run all tests
+npx playwright test
+
+Run a specific test file
+npx playwright test tests/Login.spec.js
+
+Run a specific test by name
+npx playwright test -g "User can login with valid credentials"
+
+2. Browser & Mode Control
+Run in headed mode (override config)
+npx playwright test --headed
+
+Run only Chromium
+npx playwright test --project=chromium
+
+Run Chromium in headed mode
+npx playwright test --project=chromium --headed
+
+3. Debugging & Pausing
+Run with Playwright Inspector (BEST for debugging)
+npx playwright test --debug
+
+Pause execution at page.pause()
+await page.pause();
+
+Run with Node debugger (VS Code)
+node --inspect-brk ./node_modules/.bin/playwright test
+
+4. Parallelism & Performance
+Run tests sequentially
+npx playwright test --workers=1
+
+Run fully parallel
+npx playwright test --workers=4
+
+Disable retries
+npx playwright test --retries=0
+
+5. CI / Stability Runs
+Run in CI mode
+CI=true npx playwright test
+
+Run with retries
+npx playwright test --retries=2
+
+6. Reports & Artifacts
+Generate HTML report
+npx playwright show-report
+
+Run with trace enabled
+npx playwright test --trace on
+
+Run with screenshots on failure
+npx playwright test --screenshot=only-on-failure
+
+Run with video on failure
+npx playwright test --video=retain-on-failure
+
+7. Environment Variables
+Run with custom environment variable
+ENV=staging npx playwright test
+
+Headed only when needed
+HEADED=true npx playwright test
+
+8. Test Filtering & Control
+Run only test.only
+npx playwright test --forbid-only=false
+
+Skip tests with .skip
+npx playwright test --grep-invert "@skip"
+
+Run tests by tag
+npx playwright test --grep "@smoke"
+
+9. Code Generation (Practice Tool)
+Open Playwright codegen
+npx playwright codegen https://example.com
+
+Codegen with device
+npx playwright codegen --device="Desktop Chrome"
+
+10. Installation & Setup
+Install Playwright
+npm init playwright@latest
+
+Install browsers
+npx playwright install
+
+Install Chromium only
+npx playwright install chromium
+
+11. Maintenance Commands
+Clear Playwright cache
+npx playwright install --force
+
+Update Playwright
+npm install @playwright/test@latest
+
+12. Most Important Commands (Memorize These)
+npx playwright test
+npx playwright test --debug
+npx playwright test --headed
+npx playwright show-report
+npx playwright codegen
+
+
+If you can confidently explain when and why to use each of these, you are already operating at a strong SQA Automation Engineer level.

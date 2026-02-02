@@ -1,40 +1,52 @@
-    - uses: actions/setup-node@v4
-      with:
-      node-version: lts/*
+name: Playwright Tests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 
-    - name: Install dependencies
-      run: npm ci
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-    - name: Install Playwright browsers and system deps
-      run: npx playwright install --with-deps
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
 
-    # Start a virtual X server so headed browsers can run in CI
-    - name: Start Xvfb (virtual display)
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y xvfb
-        export DISPLAY=:99
-        nohup Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
-        # give Xvfb a moment to start
-        sleep 1
-      shell: bash
+      - name: Install dependencies
+        run: npm ci
 
-    # Optional: still keep Playwright GH Action for convenience (it installs deps if asked);
-    # it is OK to keep or remove — the explicit Xvfb step above ensures a display is available.
-    - uses: microsoft/playwright-github-action@v1
-      with:
-        install-deps: false
-        browsers: all
-        xvfb: false
+      - name: Install Playwright browsers and system deps
+        run: npx playwright install --with-deps
 
-    - name: Run Playwright tests
-      env:
-        DISPLAY: ":99"
-      run: npx playwright test
+      - name: Start Xvfb (virtual display)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+          export DISPLAY=:99
+          nohup Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
+          # give Xvfb a moment to start
+          sleep 1
+        shell: bash
 
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-      name: playwright-report
-      path: playwright-report/
-     retention-days: 30
+      - uses: microsoft/playwright-github-action@v1
+        with:
+          install-deps: false
+          browsers: all
+          xvfb: false
+
+      - name: Run Playwright tests
+        env:
+          DISPLAY: ":99"
+        run: npx playwright test
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/

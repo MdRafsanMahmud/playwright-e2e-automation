@@ -27,7 +27,8 @@ test('User can remove item from wishlist', async ({ page }) => {
     await homePage.removeFavourites();
 
     // Assertion to verify the item is removed from the wishlist
-    expect(await page.locator('text=Sample Shoe Name').isVisible()).toBeFalsy();
+    // expect(await page.locator('text=Sample Shoe Name').isVisible()).toBeFalsy();
+    await expect(page.locator('text=Sample Shoe Name')).toHaveCount(0);
 });
 
 test('Verify favorites persist after page reload', async ({ page }) => {

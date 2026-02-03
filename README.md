@@ -70,6 +70,10 @@ playwright-automation/
 - **Page Object Model (POM)**
 - **Playwright HTML Reporting**
 ---
+## Record:
+https://github.com/user-attachments/assets/63fdc77a-9f46-4fa3-9bc3-e0d8b16d42ba
+
+
 
 ## 📊 Reporting
 - Interactive Playwright HTML Report
